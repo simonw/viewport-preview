@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Preview a page in different viewports</title>
+<style>
+body {
+    font-family: Helvetica, Arial, sans-serif;
+}
+input#url {
+  width: 60%;
+}
+#previews-wrapper {
+  overflow: auto;
+}
+#previews {
+  width: 8000px;
+}
+.preview {
+  margin-left: 10px;
+  display: inline-block;
+  vertical-align:top;
+}
+.preview p {
+  text-align: center;
+}
+</style>
+</head>
+<body>
+<h1>Preview a page at different sizes</h1>
+
+<form>
+<p>
+  <label for="url">URL</label>
+  <input name="url" type="text" id="url">
+  <input type="submit" value="Preview">
+</p>
+</form>
+
+<p><a href="https://github.com/simonw/viewport-preview">About this tool</a></p>
+
+<div id="previews-wrapper"><div id="previews"></div></div>
+<script>
+const url = new URLSearchParams(location.search).get('url');
+const previews = document.getElementById('previews');
+const widths = [
+  [
+    214,
+    [
+      "iPhone SE"
+    ]
+  ],
+  [
+    360,
+    [
+      "iPhone 12 Mini",
+      "LG G5",
+      "LG G4",
+      "LG G3",
+      "Samsung Galaxy S9",
+      "Samsung Galaxy S9+",
+      "Samsung Galaxy S8",
+      "Samsung Galaxy S8+",
+      "Samsung Galaxy S7",
+      "Samsung Galaxy S7 Edge"
+    ]
+  ],
+  [
+    375,
+    [
+      "iPhone 11 Pro",
+      "iPhone 11 X",
+      "iPhone 11 Xs",
+      "iPhone X",
+      "iPhone 8",
+      "iPhone 7",
+      "iPhone 6s",
+      "iPhone 6"
+    ]
+  ],
+  [
+    390,
+    [
+      "iPhone 12",
+      "iPhone 12 Pro"
+    ]
+  ],
+  [
+    411,
+    [
+      "Nexus 6P",
+      "Nexus 5X",
+      "Google Pixel",
+      "Google Pixel XL",
+      "Google Pixel 2",
+      "Google Pixel 2 XL"
+    ]
+  ],
+  [
+    414,
+    [
+      "iPhone 11 Pro Max",
+      "iPhone 11 Xs Max",
+      "iPhone 11",
+      "iPhone 11 Xr",
+      "iPhone 8 Plus",
+      "iPhone 7 Plus",
+      "iPhone 6s Plus",
+      "iPhone 6 Plus"
+    ]
+  ],
+  [
+    428,
+    [
+      "iPhone 12 Pro Max"
+    ]
+  ],
+  [
+    480,
+    [
+      "Samsung Galaxy Note 5",
+      "One Plus 3"
+    ]
+  ],
+  [
+    600,
+    [
+      "Nexus 7 (2013)"
+    ]
+  ],
+  [
+    768,
+    [
+      "iPad Third & Fourth Generation",
+      "iPad Air 1 & 2",
+      "iPad Mini",
+      "iPad Mini 2 & 3",
+      "Nexus 9"
+    ]
+  ],
+  [
+    800,
+    [
+      "Samsung Galaxy Tab 10"
+    ]
+  ],
+  [
+    1024,
+    [
+      "iPad Pro"
+    ]
+  ],
+  [
+    1280,
+    [
+      "Chromebook Pixel"
+    ]
+  ]
+];
+function buildPreview({width, src, devices}) {
+  return `
+  <div style="width: ${width}px;" class="preview">
+    <p><strong>${width}px</strong></p>
+    <iframe width="${width}" height="800" src="${src}"></iframe>
+    <p>${devices.join(", ")}</p>
+  </div>`;
+}
+
+if (url) {
+  document.getElementById('url').value = url;
+  const bits = widths.map(([width, devices]) => buildPreview({width, src: url, devices}));
+  previews.innerHTML = bits.join("\n");
+}
+</script>
+
+</body>
+</html>
