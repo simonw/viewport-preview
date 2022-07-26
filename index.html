@@ -172,7 +172,7 @@ function buildPreview({width, src, devices}) {
   <div style="width: ${width}px;" class="preview">
     <p><strong>${width}px</strong></p>
     <iframe width="${width}" height="800" src="${escapeHtml(src)}"></iframe>
-    <p>${devices.join(", ")}</p>
+    <p>${escapeHtml(devices.join(", "))}</p>
   </div>`;
 }
 
